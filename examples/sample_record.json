@@ -1,0 +1,13 @@
+{
+  "Gender": "Male",
+  "Age": 43,
+  "Occupation": "Nurse",
+  "Sleep Duration": 6.0,
+  "Quality of Sleep": 6,
+  "Physical Activity Level": 45,
+  "Stress Level": 7,
+  "BMI Category": "Overweight",
+  "Blood Pressure": "135/88",
+  "Heart Rate": 78,
+  "Daily Steps": 5200
+}
