@@ -1,6 +1,6 @@
 # Sleep Disorder Prediction
 
-[![tests](https://github.com/<github-username>/sleep-disorder-prediction/actions/workflows/tests.yml/badge.svg)](https://github.com/<github-username>/sleep-disorder-prediction/actions/workflows/tests.yml)
+[![tests](https://github.com/show20130831/Sleep-Disorder-Prediction/actions/workflows/tests.yml/badge.svg)](https://github.com/show20130831/Sleep-Disorder-Prediction/actions/workflows/tests.yml)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
@@ -74,8 +74,8 @@ Blood pressure and heart rate track the known clinical association between sleep
 ## Quickstart
 
 ```bash
-git clone <this-repo>
-cd sleep-disorder-prediction
+git clone https://github.com/show20130831/Sleep-Disorder-Prediction.git
+cd Sleep-Disorder-Prediction
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 
