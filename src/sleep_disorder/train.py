@@ -16,7 +16,7 @@ logger = get_logger(__name__)
 def split_train_test(
     X: pd.DataFrame, y: pd.Series
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
-    """Stratified 70/30 train/test split (matches the original script)."""
+    """Stratified 70/30 train/test split."""
     return train_test_split(
         X,
         y,

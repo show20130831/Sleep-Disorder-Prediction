@@ -65,10 +65,9 @@ NUMERIC_FEATURES: list[str] = [
 
 CATEGORICAL_FEATURES: list[str] = ["Gender", "Occupation", "BMI Category"]
 
-# Data-quality fix: the raw dataset encodes "normal BMI" as two distinct strings
-# ("Normal" and "Normal Weight"), which fragments one-hot encoding and dilutes
-# statistical power. Merge them before encoding. This changes downstream feature
-# counts and model results relative to the original script (intentional; see README).
+# The raw dataset encodes "normal BMI" as two distinct strings ("Normal" and
+# "Normal Weight"), which fragments one-hot encoding and dilutes statistical
+# power. Both are merged into a single "Normal" category before encoding.
 BMI_CATEGORY_MERGE_MAP: dict[str, str] = {
     "Normal Weight": "Normal",
 }

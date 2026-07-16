@@ -5,10 +5,8 @@ label mapping, category merging) — none of it "learns" anything from the data,
 so it's safe to apply before the train/test split. One-hot encoding and
 missing-value imputation are *not* here: those are stateful (they fit
 parameters from data) and are deferred to ``models.build_preprocessor``, which
-each model pipeline fits on its own training fold only. The original script
-fit those on the full dataset before splitting, which leaks test-set
-statistics into training; keeping that step out of this module is what makes
-the fix possible.
+each model pipeline fits on its own training fold only, so no statistic
+derived from validation/test data ever leaks into training.
 """
 
 from __future__ import annotations
@@ -50,9 +48,7 @@ def merge_bmi_categories(df: pd.DataFrame) -> pd.DataFrame:
     """Collapse duplicate BMI labels (e.g. "Normal Weight" -> "Normal").
 
     The raw dataset encodes normal BMI as two distinct strings, which fragments
-    one-hot encoding and dilutes statistical power. Merging changes the feature
-    space and downstream results relative to the original script; that's an
-    intentional correctness fix, not a leftover artifact.
+    one-hot encoding and dilutes statistical power.
     """
     df = df.copy()
     before = df["BMI Category"].value_counts().to_dict()

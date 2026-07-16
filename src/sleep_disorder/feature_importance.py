@@ -1,11 +1,7 @@
 """Extract and plot feature importance (RF, XGBoost) and coefficients (MLR).
 
-Also computes the cross-model top-feature intersection: the presentation this
-project is based on reports that five features (Diastolic/Systolic BP,
-Occupation_Nurse, Daily Steps, Heart Rate) are consistently selected by all
-three models, but the original script never actually implements that
-comparison — it stops after printing each model's individual top 10. This
-module adds it.
+Also computes the cross-model top-feature intersection: the features that
+rank in every model's top N, ranked by Random Forest importance.
 """
 
 from __future__ import annotations

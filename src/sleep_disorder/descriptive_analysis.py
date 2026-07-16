@@ -1,19 +1,14 @@
 """Descriptive statistics: ANOVA for numeric features, chi-square for categorical features.
 
-Every function here is agnostic to *which* rows it's given — the caller decides.
-``main.run_pipeline`` passes only the training split: none of these statistics
-feed back into feature or model selection today (``NUMERIC_FEATURES``/
-``CATEGORICAL_FEATURES`` are fixed in ``config.py``), so this isn't fixing a
-leakage bug, but keeping every code path off the test set until final
-evaluation is the safer default discipline, and it's what a real iterative
-workflow (where EDA *does* often shape feature choices) would require anyway.
+Every function here is agnostic to *which* rows it's given — the caller
+decides. ``main.run_pipeline`` passes only the training split, keeping every
+code path off the test set until final evaluation.
 
-Categorical variables are tested one-hot dummy column vs. target, matching the
-original script. This means rare categories (e.g. an occupation held by only a
-handful of people) can violate the chi-square test's minimum expected cell
-frequency assumption — worse now that EDA sees ~70% of the data instead of
-100%; :func:`compute_categorical_summary` flags this per column instead of
-silently reporting an unreliable p-value.
+Categorical variables are tested one-hot dummy column vs. target. Rare
+categories (e.g. an occupation held by only a handful of people) can violate
+the chi-square test's minimum expected cell frequency assumption;
+:func:`compute_categorical_summary` flags this per column instead of silently
+reporting an unreliable p-value.
 """
 
 from __future__ import annotations

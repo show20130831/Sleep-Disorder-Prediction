@@ -17,7 +17,7 @@ Beyond the modeling question, the project is built as a **production-style pipel
 ## Highlights
 
 - **Preprocessing fit on the training fold only** — imputation and one-hot encoding are fit inside each model pipeline, never on the full dataset; the test set is touched exactly once, for final scoring.
-- **Imbalance handled and verified, not assumed** — SMOTE is applied per-fold via `imblearn.Pipeline`; a redundant `class_weight="balanced"` was identified and removed after confirming it had zero effect once SMOTE already balances the fold.
+- **Imbalance handled deliberately** — SMOTE is applied per-fold via `imblearn.Pipeline`, equalizing class counts within each training fold before the classifier ever sees the data.
 - **Evaluation metric chosen to match the training objective** — macro F1 (not the more commonly reported weighted F1) is the primary metric, because weighted F1 is dominated by the majority class and can mask exactly the minority-class gains SMOTE is meant to produce.
 - **Fully reproducible CLI pipeline** — `python -m sleep_disorder.main` regenerates every table, figure, and model from raw data in under a minute.
 - **Inference-ready** — a trained pipeline can score a new record via CLI (`sleep_disorder.inference`) without touching training code.
@@ -33,7 +33,7 @@ Beyond the modeling question, the project is built as a **production-style pipel
 
 **Preprocessing.** Blood pressure is decomposed into systolic/diastolic components; the raw data's two "normal BMI" labels are merged into one to stop the one-hot encoding from being fragmented. All stateful transforms (imputation, one-hot encoding) are fit only inside each fold's training split.
 
-**Class imbalance.** SMOTE oversampling is applied per-fold, never to a held-out split. `class_weight="balanced"` was tested and dropped: once SMOTE already equalizes class counts within a fold, it computes a uniform weight of 1 and does nothing — the code shouldn't imply two imbalance-correction techniques are stacking when only one is active.
+**Class imbalance.** SMOTE oversampling is applied per-fold, never to a held-out split, equalizing class counts before each classifier is fit.
 
 **Evaluation.** 5-fold stratified CV and a held-out 30% test set, both scored on macro F1 (primary) and weighted F1 (secondary, for comparison with more commonly reported baselines), plus One-vs-Rest ROC/AUC and per-model feature importance.
 

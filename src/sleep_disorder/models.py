@@ -1,14 +1,9 @@
 """Model registry: builds the RF / XGBoost / MLR imbalanced-learn pipelines.
 
-A single registry replaces the three near-duplicate training blocks in the
-original script. Every pipeline shares the same preprocessing step, fit only
-on the training fold (:func:`build_preprocessor`), and applies SMOTE only during ``fit``
+Every pipeline shares the same preprocessing step, fit only on the training
+fold (:func:`build_preprocessor`), and applies SMOTE only during ``fit``
 (imblearn's ``Pipeline`` skips resamplers at predict time), so the held-out
-fold is never oversampled. Hyperparameters come from ``config.PIPELINE_CONFIG``
-and are unchanged from the original script, aside from dropping
-``class_weight="balanced"``: with SMOTE already balancing each training fold
-to equal class counts, that parameter was a no-op (see project README for the
-derivation) and removing it does not change results.
+fold is never oversampled. Hyperparameters live in ``config.PIPELINE_CONFIG``.
 """
 
 from __future__ import annotations
@@ -49,10 +44,9 @@ def build_preprocessor() -> ColumnTransformer:
     - Numeric features: mean-imputed (defensive; this dataset has no missing
       values, but imputing here rather than in ``preprocessing.py`` means the
       mean is always computed from the training fold only).
-    - Categorical features: one-hot encoded with the first category dropped,
-      matching ``pd.get_dummies(..., drop_first=True)`` from the original
-      script. ``handle_unknown="ignore"`` makes it robust to a category that
-      happens to appear only in the held-out fold.
+    - Categorical features: one-hot encoded with the first category dropped.
+      ``handle_unknown="ignore"`` makes it robust to a category that happens
+      to appear only in the held-out fold.
 
     Fitting this inside each model's :class:`~imblearn.pipeline.Pipeline` means
     it is refit on every train fold independently — no statistic derived from

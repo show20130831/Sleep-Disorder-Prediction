@@ -21,7 +21,7 @@ logger = get_logger(__name__)
 
 
 def run_pipeline() -> None:
-    """Run every pipeline stage end to end. Importable directly (e.g. from a notebook)."""
+    """Run every pipeline stage end to end. Importable directly for reuse outside the CLI."""
     logger.info("Starting sleep disorder prediction pipeline")
 
     raw_df = load_raw_data()
